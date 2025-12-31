@@ -1,0 +1,41 @@
+# Configuração do pipeline de detecção de fraude em cartão de crédito
+
+data:
+  raw_data_path: 'data/raw/creditcard.csv'
+  processed_data_dir: 'data/processed'
+  train_features_path: 'data/processed/train_processed.csv'
+  train_target_path: 'data/processed/train_processed_target.csv'
+  test_features_path: 'data/processed/test_processed.csv'
+  test_target_path: 'data/processed/test_processed_target.csv'
+
+preprocessing:
+  # Metodos de balanceamento de dados
+  # Opções: 'SMOTE', 'none'
+  sampling_method: 'SMOTE'
+  test_data_ratio: 0.2
+ 
+features:
+  # Opções: 'all', 'top_correlated',
+  feature_selection: 'all'
+  top_n_features: 20
+  create_derived_features: true
+
+training:
+  # Parametros do modelo de machine learning
+  model_type: 'RandomForest'
+  params:
+    random_state: 42
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 10
+    class_weight: 'balanced'
+
+evaluation:
+  # Métricas de avaliação do modelo
+  metrics: ['recall', 'roc_auc']
+
+# TODO: Remover esta seção que não está sendo usada atualmente
+registry:
+  # Registro do modelo dos arte
+  model_name: 'credit_fraud_detector'
+  experiment_name: 'fraud-detection-pipeline'

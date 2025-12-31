@@ -12,3 +12,33 @@ O conjunto de dados utilizado neste projeto é o `creditcard.csv`, proveniente d
 
 As características (`V1` a `V28`) são resultado de uma Transformação de Componentes Principais (PCA), devido a questões de confidencialidade. As únicas características que não foram transformadas são `Time` (tempo decorrido entre a primeira transação e a transação atual), `Amount` (valor da transação) e `Class` (variável alvo, indicando fraude (1) ou não fraude (0)).
 
+## Estrutura do Projeto
+
+A organização do projeto segue as melhores práticas para desenvolvimento de soluções de Machine Learning, visando modularidade, reprodutibilidade e facilidade de manutenção:
+
+```
+.
+├── data/
+│   ├── raw/                  # Dados brutos (ex: creditcard.csv)
+│   └── processed/            # Dados após pré-processamento
+├── notebooks/
+│   ├── analise_exploratoria.ipynb  # Notebooks para análise exploratória de dados (EDA)
+│   └── testes.ipynb                # Notebooks para testes e experimentação
+├── src/
+│   ├── features/             # Módulos para engenharia de features
+│   │   └── build_features.py
+│   ├── models/               # Módulos para treinamento e avaliação de modelos
+│   │   ├── train_model.py    # Exemplo de script de treinamento
+│   │   └── predict_model.py  # Exemplo de script de predição
+│   └── app/                  # Módulos para a API de predição online
+│       └── main.py
+├── requirements.txt          # Dependências do projeto
+├── readme.ipynb              # Guia detalhado de desenvolvimento do projeto
+└── README.md                 # Este arquivo
+```
+
+
+### TODO:
+ * Reler toda a parte de processamento novamente pra ser se faz sentido.
+ * Implementar um rolê que acha os melhores valores para o RandomForest.
+ * Finalizar todo o resto.
