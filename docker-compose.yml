@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the current directory into the container's /app directory
+      # This allows for live code changes to be reflected (if Uvicorn's reload is enabled, though not explicitly in CMD)
+      # and for input/output files (like models, data, reports) to be accessible from host
+      - .:/app
+    environment:
+      PYTHONUNBUFFERED: "1" # Ensures Python output is unbuffered
+      # Add any other environment variables here if needed
+      # e.g., MODEL_PATH: "/app/models/my_model.pkl"
+    # command: uvicorn src.app.main:app --host 0.0.0.0 --port 8000 --reload
+    # We rely on the CMD in the Dockerfile, but you could override it here for development
+    # (e.g., to enable --reload for live updates)
