@@ -56,3 +56,12 @@ def select_features(df: pd.DataFrame, feature_selection: str = 'all', top_n_feat
     
     logger.warning(f"Método de seleção '{feature_selection}' não reconhecido. Retornando todas as features.")
     return df
+
+def create_time_features(df):
+    """Cria features de tempo (hora do dia) a partir da coluna 'Time' em segundos."""
+    if 'Time' not in df.columns:
+        raise ValueError("A coluna 'Time' não existe no DataFrame.")
+    df_copy = df.copy()
+    # Converte segundos para horas e pega o módulo 24 para ter a hora do dia
+    df_copy['Time_hour'] = (df_copy['Time'] / 3600) % 24
+    return df_copy

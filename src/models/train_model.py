@@ -5,7 +5,7 @@ import logging
 import joblib
 import yaml
 from sklearn.ensemble import RandomForestClassifier
-from ..utils.path_manager import get_next_run_dir
+from ..utils.path_manager import get_next_version_dir
 
 def run(config: dict) -> str:
     """
@@ -46,7 +46,7 @@ def run(config: dict) -> str:
         raise ValueError(f"Tipo de modelo '{model_type}' não suportado.")
     
     # --- Gerenciamento de Artefatos do Run ---
-    run_dir = get_next_run_dir()
+    run_dir = get_next_version_dir(prefix='train')
     logger.info(f"Diretório do run criado em: {run_dir}")
 
     # Salvar modelo

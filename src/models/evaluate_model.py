@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 import logging
-import joblib
+import joblib 
 import yaml
 from sklearn.metrics import (
     classification_report,
@@ -13,7 +13,7 @@ from sklearn.metrics import (
 )
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+from src.utils.model_utils import load_model_from_pkl
 def run(config: dict, model_path: str):
     """
     Avalia o modelo treinado usando os dados de teste e salva os resultados.
@@ -30,9 +30,8 @@ def run(config: dict, model_path: str):
 
     # Carregar modelo treinado
     try:
-        model = joblib.load(model_path)
-        logger.info(f"Modelo carregado de: {model_path}")
-    except FileNotFoundError as e:
+        model = load_model_from_pkl(model_path)
+    except (FileNotFoundError, Exception) as e: # Catch both specific FileNotFoundError and generic Exception from utility
         logger.error(f"Erro ao carregar o modelo: {e}")
         return
 

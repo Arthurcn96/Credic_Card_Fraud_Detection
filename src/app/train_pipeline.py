@@ -1,8 +1,8 @@
 import yaml
 import argparse
 import logging
-from .data import process_data
-from .models import train_model, evaluate_model
+from src.data import process_data
+from src.models import train_model, evaluate_model
 
 def run_pipeline(config_path: str) -> None:
     """
