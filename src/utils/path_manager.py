@@ -6,8 +6,6 @@ import re
 
 def get_next_version_dir(base_dir: str = 'runs', prefix: str = 'run') -> str:
     """
-    Encontra o próximo número de versão para um determinado prefixo, cria o diretório e o retorna.
-
     A função procura por diretórios no formato '<prefix><numero>' dentro
     do diretório base, determina o próximo número sequencial e cria
     um novo diretório com esse número.

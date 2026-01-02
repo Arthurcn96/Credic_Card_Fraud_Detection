@@ -45,7 +45,7 @@ def run(config: dict) -> str:
     else:
         raise ValueError(f"Tipo de modelo '{model_type}' não suportado.")
     
-    # --- Gerenciamento de Artefatos do Run ---
+    # Gerenciamento de Artefatos do Run
     run_dir = get_next_version_dir(prefix='train')
     logger.info(f"Diretório do run criado em: {run_dir}")
 

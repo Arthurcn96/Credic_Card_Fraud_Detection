@@ -10,9 +10,6 @@ def run(config: dict) -> None:
     """
     Carrega, pré-processa e balanceia o conjunto de dados de fraude de cartão de crédito
     usando as configurações fornecidas.
-
-    Args:
-        config (dict): Dicionário de configuração carregado do config.yaml.
     """
     # Configurar logging
     logger = logging.getLogger("process_data")
@@ -44,7 +41,7 @@ def run(config: dict) -> None:
         logger.warning("Dados ausentes encontrados. Preenchendo com a média.")
         df.fillna(df.mean(), inplace=True)
 
-    # ---- Utilizar Feature Engineering com dados PCA dificilmente é necessário ----
+    # Utilizar Feature Engineering com dados PCA dificilmente é necessário
     if feature_selection != 'all':
         df = select_features(df, feature_selection, top_n_features)
         logger.info(f"Features selecionadas usando estratégia: {feature_selection}")
@@ -64,9 +61,8 @@ def run(config: dict) -> None:
 
     #Random Forest não precisa de escalonamento
     # Árvores de decisão fazem divisões por comparações de valores, não por distâncias
-    # Remover StandardScaler (desnecessario manter o mesmo peso na modelagem)
-    # Cada feature é avaliada independentemente
-    # A escala não afeta as divisões das árvores
+    # StandardScaler (desnecessario manter o mesmo peso na modelagem)
+    # Cada feature é avaliada independentemente e escala não afeta as árvores
     #TODO: Balancear os dados apenas no treino pra aumentar a performance do modelo
 
     # Salvar os dados de treino e teste processados

@@ -35,8 +35,8 @@ def run_batch_predictions(model_path: str, input_data_path: str):
         probabilities = model.predict_proba(input_df)
         logger.info("Predições realizadas com sucesso.")
 
-        # Mapear predições numéricas para strings "FRAUDE" ou "Normal"
-        status_predicao = ['FRAUDE' if p == 1 else 'Normal' for p in predictions]
+        # Mapear predições numéricas para strings "FRAUDE" ou "NÃO_FRAUDE"
+        status_predicao = ['FRAUDE' if p == 1 else 'NÃO_FRAUDE' for p in predictions]
 
         # Probabilidade da classe predita (certeza da predição)
         probabilidade_predita = probabilities.max(axis=1)

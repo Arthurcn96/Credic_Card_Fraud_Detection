@@ -14,15 +14,13 @@ def detect_drift(reference_path: str, current_path: str, report_path: str, alpha
     """
     Detecta desvio de dados entre dois datasets usando testes estatísticos (KS e Qui-quadrado).
 
-    Args:
+        Args:
         reference_path (str): Caminho para o arquivo CSV de referência.
         current_path (str): Caminho para o arquivo CSV atual.
         report_path (str): Caminho para salvar o relatório JSON de desvio.
         alpha (float): Nível de significância para os testes estatísticos.
     """
-    logger.info("="*60)
-    logger.info("DETECÇÃO DE DESVIO DE DADOS (SCIPY)")
-    logger.info("="*60)
+    logger.info("DETECÇÃO DE DESVIO DE DADOS")
     logger.info(f"Dados de Referência: {reference_path}")
     logger.info(f"Dados Atuais: {current_path}")
     logger.info(f"Nível de Significância (alpha): {alpha}")
@@ -94,8 +92,7 @@ def detect_drift(reference_path: str, current_path: str, report_path: str, alpha
         contingency_table = pd.concat([ref_counts, current_counts], axis=1).fillna(0)
         contingency_table.columns = ['reference', 'current']
 
-        # Ensure there are enough samples and degrees of freedom for Chi-squared test
-        # chi2_contingency requires at least 2x2 table and no expected frequencies to be 0
+        # Certifique-se de que haja amostras para o teste
         if contingency_table.shape[0] < 2 or contingency_table.sum().sum() < 2:
              logger.warning(f"Feature '{col}' pulada: não há dados suficientes ou categorias (>1) para o teste Qui-quadrado.")
              continue
@@ -112,7 +109,7 @@ def detect_drift(reference_path: str, current_path: str, report_path: str, alpha
         if is_drifted:
             drift_results['drifted_features_list'].append(col)
 
-    # --- Sumarizar e Salvar Relatório ---
+    # Sumarizar e Salvar Relatório
     drifted_count = len(drift_results['drifted_features_list'])
     if drifted_count > 0:
         drift_results['drift_detected'] = True
@@ -147,7 +144,7 @@ def main():
     
     results = detect_drift(args.reference, args.current, args.report_path, args.alpha)
 
-    # --- Sair com status apropriado para uso em CLI ---
+    # Sair com status apropriado para uso em CLI
     if results['drift_detected']:
         logger.warning("\nDesvio de dados DETECTADO!")
         sys.exit(1)

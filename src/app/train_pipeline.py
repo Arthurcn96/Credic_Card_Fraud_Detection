@@ -13,7 +13,7 @@ def run_pipeline(config_path: str) -> None:
     logger = logging.getLogger(__name__)
     logger.info("--- Iniciando Pipeline de Detecção de Fraude ---")
     
-    # 1. Carregar configuração
+    # Carregar configuração
     try:
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
@@ -25,15 +25,15 @@ def run_pipeline(config_path: str) -> None:
         logger.error(f"Erro ao carregar o arquivo YAML: {e}")
         return
 
-    # --- Executando as etapas do Pipeline em sequência ---
+    # Executando as etapas do Pipeline em sequência
 
-    # 2. Pré-processamento dos dados
+    # 1. Pré-processamento dos dados
     process_data.run(config)
 
-    # 3. Treinamento do Modelo
+    # 2. Treinamento do Modelo
     model_path = train_model.run(config)
 
-    # 4. Avaliação do Modelo
+    # 3. Avaliação do Modelo
     evaluate_model.run(config, model_path)
     # Se o modelo atual é melhor que o anterior for, ele poderia ser 'promovido' ou registrado.
     
@@ -43,7 +43,6 @@ def main():
     """
     Função principal para executar o pipeline via linha de comando.
     """
-    #Faz o loggin printar no tela as coisas
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
     parser = argparse.ArgumentParser(description="Executa o pipeline de detecção de fraude.")
