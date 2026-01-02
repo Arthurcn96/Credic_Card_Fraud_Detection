@@ -56,6 +56,8 @@ def run_batch_predictions(model_path: str, input_data_path: str):
         output_df.to_csv(output_data_path, index=False)
         logger.info(f"Predições salvas com sucesso em: {output_data_path}")
 
+        return output_data_path
+
     except FileNotFoundError as e:
         logger.error(f"Erro de arquivo não encontrado: {e}", exc_info=True)
         raise

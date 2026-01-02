@@ -130,13 +130,7 @@ def detect_drift(reference_path: str, current_path: str, report_path: str, alpha
         json.dump(drift_results, f, indent=4)
     logger.info(f"Relatório de desvio salvo em: {report_path.absolute()}")
 
-    # --- Sair com status apropriado ---
-    if drift_results['drift_detected']:
-        logger.warning("Desvio de dados DETECTADO!")
-        sys.exit(1)
-    else:
-        logger.info("Nenhum desvio de dados significativo detectado.")
-        sys.exit(0)
+    return drift_results
 
 
 def main():
@@ -150,7 +144,16 @@ def main():
     parser.add_argument('--alpha', type=float, default=0.05, help='Nível de significância (p-value threshold).')
     
     args = parser.parse_args()
-    detect_drift(args.reference, args.current, args.report_path, args.alpha)
+    
+    results = detect_drift(args.reference, args.current, args.report_path, args.alpha)
+
+    # --- Sair com status apropriado para uso em CLI ---
+    if results['drift_detected']:
+        logger.warning("\nDesvio de dados DETECTADO!")
+        sys.exit(1)
+    else:
+        logger.info("\nNenhum desvio de dados significativo detectado.")
+        sys.exit(0)
 
 
 if __name__ == '__main__':
